@@ -44,6 +44,14 @@ else()
     endif()
 endif()
 
+# 查找Qt5库
+find_package(Qt5 REQUIRED COMPONENTS Core Widgets)
+
+# 启用Qt5的自动MOC (Meta-Object Compiler)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTORCC ON)
+
 # 添加源文件目录
 file(GLOB_RECURSE SOURCES "source/*.cpp" "source/*.c")
 file(GLOB_RECURSE HEADERS "source/*.h" "source/*.hpp")
@@ -54,6 +62,12 @@ add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
 # 设置包含目录
 target_include_directories(${PROJECT_NAME} PRIVATE 
     ${CMAKE_CURRENT_SOURCE_DIR}/source
+)
+
+# 链接Qt5库
+target_link_libraries(${PROJECT_NAME} PRIVATE 
+    Qt5::Core 
+    Qt5::Widgets
 )
 
 # 链接系统库（如果需要）
@@ -77,6 +91,32 @@ install(TARGETS ${PROJECT_NAME}
     RUNTIME DESTINATION bin
 )
 
+# 添加自定义目标
+# 运行应用程序
+add_custom_target(run
+    COMMAND ${CMAKE_BINARY_DIR}/bin/${PROJECT_NAME}
+    DEPENDS ${PROJECT_NAME}
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+    COMMENT "Running ${PROJECT_NAME}"
+)
+
+# 清理目标（除了默认的clean）
+add_custom_target(distclean
+    COMMAND ${CMAKE_COMMAND} -E remove_directory ${CMAKE_BINARY_DIR}/bin
+    COMMAND ${CMAKE_COMMAND} -E remove_directory ${CMAKE_BINARY_DIR}/CMakeFiles
+    COMMAND ${CMAKE_COMMAND} -E remove ${CMAKE_BINARY_DIR}/CMakeCache.txt
+    COMMAND ${CMAKE_COMMAND} -E remove ${CMAKE_BINARY_DIR}/cmake_install.cmake
+    COMMAND ${CMAKE_COMMAND} -E remove ${CMAKE_BINARY_DIR}/Makefile
+    COMMENT "Cleaning all build files"
+)
+
+# 重新构建目标
+add_custom_target(rebuild
+    COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR} --target clean
+    COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR}
+    COMMENT "Rebuilding project"
+)
+
 # 打印一些有用的信息
 message(STATUS "Project: ${PROJECT_NAME}")
 message(STATUS "Version: ${PROJECT_VERSION}")
@@ -84,3 +124,5 @@ message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
 message(STATUS "C++ standard: ${CMAKE_CXX_STANDARD}")
 message(STATUS "Compiler: ${CMAKE_CXX_COMPILER_ID}")
 message(STATUS "System: ${CMAKE_SYSTEM_NAME}")
+message(STATUS "Qt5 Core version: ${Qt5Core_VERSION}")
+message(STATUS "Qt5 Widgets version: ${Qt5Widgets_VERSION}")
