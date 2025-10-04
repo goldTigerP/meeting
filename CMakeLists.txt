@@ -45,7 +45,7 @@ else()
 endif()
 
 # 查找Qt5库
-find_package(Qt5 REQUIRED COMPONENTS Core Widgets Network)
+find_package(Qt5 REQUIRED COMPONENTS Core Widgets Network Multimedia MultimediaWidgets)
 
 # 启用Qt5的自动MOC (Meta-Object Compiler)
 set(CMAKE_AUTOMOC ON)
@@ -69,6 +69,8 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     Qt5::Core 
     Qt5::Widgets
     Qt5::Network
+    Qt5::Multimedia
+    Qt5::MultimediaWidgets
 )
 
 # 链接系统库（如果需要）
