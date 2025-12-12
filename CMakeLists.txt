@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 3.10)
 project(meeting VERSION 1.0.0 LANGUAGES CXX)
 
 # 设置C++标准
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # 设置编译器特定的编译选项
@@ -45,37 +45,25 @@ else()
 endif()
 
 # 添加源文件目录
-file(GLOB_RECURSE SOURCES "source/*.cpp" "source/*.c")
-file(GLOB_RECURSE HEADERS "source/*.h" "source/*.hpp")
+file(GLOB_RECURSE SOURCES "source/*.cpp" "source/*.h")
 
 # 创建可执行文件
-add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
+add_executable(${PROJECT_NAME} ${SOURCES})
 
 # 设置包含目录
 target_include_directories(${PROJECT_NAME} PRIVATE 
     ${CMAKE_CURRENT_SOURCE_DIR}/source
+    ${CMAKE_CURRENT_SOURCE_DIR}/source/core
 )
 
 # 链接系统库（如果需要）
 if(WIN32)
     # Windows特定的库
-    # target_link_libraries(${PROJECT_NAME} PRIVATE ws2_32)  # 如果需要网络功能
+    target_link_libraries(${PROJECT_NAME} PRIVATE ws2_32)  # 网络功能
 elseif(UNIX AND NOT APPLE)
     # Linux特定的库
     target_link_libraries(${PROJECT_NAME} PRIVATE pthread)  # 线程库
 endif()
-
-# 设置输出目录
-set_target_properties(${PROJECT_NAME} PROPERTIES
-    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin
-    RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/bin
-    RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/bin
-)
-
-# 安装配置
-install(TARGETS ${PROJECT_NAME}
-    RUNTIME DESTINATION bin
-)
 
 # 打印一些有用的信息
 message(STATUS "Project: ${PROJECT_NAME}")

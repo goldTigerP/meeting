@@ -1,0 +1,79 @@
+# .clang-format 配置文件 - 4空格缩进
+BasedOnStyle: Google
+
+# 核心缩进设置
+IndentWidth: 4                    # 缩进宽度为4个空格
+TabWidth: 4                       # Tab等效为4个空格  
+UseTab: Never                     # 永远不使用Tab，只使用空格
+
+# 基本设置
+Standard: c++17                   # 使用C++17标准
+ColumnLimit: 100                  # 行长度限制
+CommentPragmas: '^ NOLINT'
+
+# 访问修饰符缩进
+AccessModifierOffset: -4          # public/private 顶格对齐（相对于类缩进-4）
+
+# 构造函数和继续行缩进
+ConstructorInitializerIndentWidth: 4
+ContinuationIndentWidth: 4
+
+# 对齐设置
+AlignAfterOpenBracket: Align
+AlignConsecutiveAssignments: true
+AlignConsecutiveDeclarations: false
+AlignEscapedNewlines: Left
+AlignOperands: true
+AlignTrailingComments: true
+
+# 换行和括号设置
+BraceWrapping:
+  AfterClass: false
+  AfterControlStatement: false
+  AfterEnum: false
+  AfterFunction: false
+  AfterNamespace: false
+  AfterStruct: false
+  AfterUnion: false
+  BeforeCatch: false
+  BeforeElse: false
+  IndentBraces: false
+
+BreakBeforeBinaryOperators: None
+BreakBeforeTernaryOperators: true
+BreakConstructorInitializers: BeforeColon
+
+# 空格设置
+SpaceAfterCStyleCast: false
+SpaceAfterTemplateKeyword: true
+SpaceBeforeAssignmentOperators: true
+SpaceBeforeParens: ControlStatements
+SpaceInEmptyParentheses: false
+SpacesBeforeTrailingComments: 2
+SpacesInAngles: false
+SpacesInContainerLiterals: false
+SpacesInCStyleCastParentheses: false
+SpacesInParentheses: false
+SpacesInSquareBrackets: false
+
+# 函数和语句设置
+AllowShortBlocksOnASingleLine: false
+AllowShortCaseLabelsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: Empty
+AllowShortIfStatementsOnASingleLine: false
+AllowShortLoopsOnASingleLine: false
+
+# 指针和引用对齐
+PointerAlignment: Left            # int* ptr
+ReferenceAlignment: Left          # int& ref
+
+# 命名空间和预处理器
+NamespaceIndentation: None        # 命名空间内容不额外缩进
+IndentPPDirectives: None          # 预处理器指令不缩进
+
+# 排序设置  
+SortIncludes: true
+SortUsingDeclarations: true
+
+# C++11特性
+Cpp11BracedListStyle: true
