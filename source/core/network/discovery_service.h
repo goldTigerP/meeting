@@ -75,8 +75,6 @@ public:
 
 private:
     // 配置参数
-    std::string local_ip_;
-    uint16_t local_port_;
     std::string multicast_address_;
     uint16_t multicast_port_;
     int heartbeat_interval_;  // 心跳间隔（秒）

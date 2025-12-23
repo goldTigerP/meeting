@@ -8,6 +8,14 @@ project(meeting VERSION 1.0.0 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# 启用Qt的MOC、UIC和RCC
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTORCC ON)
+
+# 查找Qt6包
+find_package(Qt6 REQUIRED COMPONENTS Core Widgets Network)
+
 # 设置编译器特定的编译选项
 if(WIN32)
     # Windows特定配置
@@ -54,6 +62,13 @@ add_executable(${PROJECT_NAME} ${SOURCES})
 target_include_directories(${PROJECT_NAME} PRIVATE 
     ${CMAKE_CURRENT_SOURCE_DIR}/source
     ${CMAKE_CURRENT_SOURCE_DIR}/source/core
+)
+
+# 链接Qt和系统库
+target_link_libraries(${PROJECT_NAME} PRIVATE 
+    Qt6::Core 
+    Qt6::Widgets 
+    Qt6::Network
 )
 
 # 链接系统库（如果需要）
